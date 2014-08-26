@@ -8,8 +8,14 @@
                  ;;[org.osgi/org.osgi.core "4.3.0"]
                  [com.theoryinpractise/clojure.osgi "1.6.0-1"]]
   :manifest {"Bundle-SymbolicName" "com.example.derived"
-             "Bundle-Import" "clojure.lang,com.example.base"
-             "Clojure-Require" "com.example.derived"
-             "Clojure-Activator" "com.example.activator"}
+             "Bundle-Name" "Derived Class Bundle"
+             "Import-Package" "com.example,com.example.base,clojure,clojure.lang";;"com.example,com.example.base,clojure,clojure.lang,clojure.asm,clojure.asm.commons,clojure.core,clojure.lang,clojure.core.protocols,clojure.core.proxy$clojure.lang,clojure.data,clojure.inspector.proxy$java.lang,clojure.inspector.proxy$javax.swing.table,clojure.instant.proxy$java.lang,clojure.java,clojure.java.api,clojure.java.browse_ui.proxy$java.lang,clojure.java.io,clojure.lang,clojure.asm.commons,clojure.pprint,clojure.pprint.proxy$java.io,clojure.pprint,clojure.reflect,clojure.reflect.proxy$clojure.asm,clojure.lang,clojure.repl.proxy$java.io,clojure.repl.proxy$java.lang,clojure.test,clojure.xml.proxy$java.lang"
+             "Clojure-Require" "com.example.activator,com.example.derived"
+             "Clojure-ActivatorNamespace" "com.example.activator"
+             "DynamicImport-Package" "*"}
   :omit-source true
-  :aot [com.example.derived])
+  :jar-exclusions [#"clojure/osgi/*"]
+  :prep-tasks [["compile" "com.example.derived"]
+               "javac" "compile"]
+  :aot :all; [com.example.derived]
+  )
